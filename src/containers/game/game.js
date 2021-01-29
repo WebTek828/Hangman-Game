@@ -21,10 +21,6 @@ class Game extends Component {
     this.setState({ word: this.words[rn], guessedWords });
   }
 
-  closeModalHandler = () => {
-    this.setState({ showWinningMsg: false });
-  };
-
   guessedWordsHandler = (word, index) => {
     setTimeout(() => {
       const guessedWords = [...this.state.guessedWords];
@@ -34,18 +30,23 @@ class Game extends Component {
         JSON.stringify(this.state.word.split("")) ===
         JSON.stringify(this.state.guessedWords)
       ) {
-        this.setState({ win: true, showWinningMsg: true });
+        setTimeout(() => {
+          this.setState({ win: true, showWinningMsg: true });
+        }, 500);
       }
     }, 200);
+  };
+
+  playAgainHandler = () => {
+    const rn = Math.floor(Math.random() * this.words.length);
+    const guessedWords = [...Array(this.words[rn].length)];
+    this.setState({ word: this.words[rn], guessedWords, win: false });
   };
 
   render() {
     return (
       <>
-        <Win
-          showWinningMsg={this.state.showWinningMsg}
-          closeModal={this.closeModalHandler}
-        />
+        <Win win={this.state.win} playAgain={this.playAgainHandler} />
         <div className="container">
           <GuessedWordsDisplay
             quiz={this.state.word}
