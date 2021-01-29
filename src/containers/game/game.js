@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./game.css";
 import Alphabets from "../../components/Alphabets/Alphabets";
 import GuessedWordsDisplay from "../../components/GuessedWordsDisplay/GuessedWordsDisplay";
+import Win from "../../components/Win/Win";
 
 class Game extends Component {
   words = "swear heart love compassion guy lady".split(" ");
@@ -10,6 +11,8 @@ class Game extends Component {
   state = {
     word: "",
     guessedWords: [],
+    win: false,
+    showWinningMsg: false,
   };
 
   componentDidMount() {
@@ -18,30 +21,44 @@ class Game extends Component {
     this.setState({ word: this.words[rn], guessedWords });
   }
 
+  closeModalHandler = () => {
+    this.setState({ showWinningMsg: false });
+  };
+
   guessedWordsHandler = (word, index) => {
     setTimeout(() => {
       const guessedWords = [...this.state.guessedWords];
       guessedWords[index] = word;
-      console.log(word);
-      console.log(index);
       this.setState({ guessedWords });
+      if (
+        JSON.stringify(this.state.word.split("")) ===
+        JSON.stringify(this.state.guessedWords)
+      ) {
+        this.setState({ win: true, showWinningMsg: true });
+      }
     }, 200);
   };
-  ssedWords;
 
   render() {
-    console.log(this.state);
     return (
-      <div className="container">
-        <GuessedWordsDisplay
-          quiz={this.state.word}
-          guessedWords={this.state.guessedWords}
+      <>
+        <Win
+          showWinningMsg={this.state.showWinningMsg}
+          closeModal={this.closeModalHandler}
         />
-        <Alphabets
-          guessedWords={(word, index) => this.guessedWordsHandler(word, index)}
-          quiz={this.state.word}
-        />
-      </div>
+        <div className="container">
+          <GuessedWordsDisplay
+            quiz={this.state.word}
+            guessedWords={this.state.guessedWords}
+          />
+          <Alphabets
+            guessedWords={(word, index) =>
+              this.guessedWordsHandler(word, index)
+            }
+            quiz={this.state.word}
+          />
+        </div>
+      </>
     );
   }
 }

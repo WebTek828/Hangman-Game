@@ -5,6 +5,7 @@ import "./GuessedWordsDisplay.css";
 const GuessedWordsDisplay = (props) => {
   let quizOutput;
   console.log(props.quiz);
+
   if (props.quiz.length > 0) {
     quizOutput = props.guessedWords.map((l, i) => {
       return (
