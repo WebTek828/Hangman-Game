@@ -9,7 +9,7 @@ const GuessedWordsDisplay = (props) => {
     quizOutput = props.guessedWords.map((l, i) => {
       return (
         <span key={i} className="word">
-          {l && l}
+          {l ? l : "_______"}
         </span>
       );
     });
