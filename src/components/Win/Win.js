@@ -7,7 +7,7 @@ const Win = (props) => {
     ? (winningMsg = (
         <div onClick={props.playAgain} className="win">
           <div className="win-message">
-            <h4>Congratulations!You win</h4>
+            <h4>{props.textMsg}</h4>
             <button onClick={props.playAgain} className="win__btn">
               Play again
             </button>
