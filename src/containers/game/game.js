@@ -54,6 +54,11 @@ class Game extends Component {
   };
 
   playAgainHandler = () => {
+    const btns = document.querySelectorAll(".alphabet");
+    btns.forEach((btn) => {
+      btn.disabled = false;
+    });
+
     const rn = Math.floor(Math.random() * this.words.length);
     const guessedWords = [...Array(this.words[rn].length)];
     this.setState({

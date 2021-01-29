@@ -6,6 +6,8 @@ const Alphabets = (props) => {
   const alphabets = "abcdefghijklnmopqrstuvwhyz".split("");
 
   const guessingHandler = (e) => {
+    e.target.disabled = true;
+
     const domText = e.target.innerText;
     const quizWord = props.quiz.split("");
 

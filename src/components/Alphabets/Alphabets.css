@@ -22,3 +22,9 @@
   background: rgba(204, 201, 198, 0.692);
   transform: scale(1);
 }
+
+.alphabet:disabled {
+  background: black;
+  cursor: not-allowed;
+  transform: scale(1);
+}
