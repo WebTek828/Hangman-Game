@@ -9,18 +9,38 @@ class Game extends Component {
 
   state = {
     word: "",
+    guessedWords: [],
   };
 
   componentDidMount() {
     const rn = Math.floor(Math.random() * this.words.length);
-    this.setState({ word: this.words[rn] });
+    const guessedWords = [...Array(this.words[rn].length)];
+    this.setState({ word: this.words[rn], guessedWords });
   }
 
+  guessedWordsHandler = (word, index) => {
+    setTimeout(() => {
+      const guessedWords = [...this.state.guessedWords];
+      guessedWords[index] = word;
+      console.log(word);
+      console.log(index);
+      this.setState({ guessedWords });
+    }, 200);
+  };
+  ssedWords;
+
   render() {
+    console.log(this.state);
     return (
       <div className="container">
-        <GuessedWordsDisplay quiz={this.state.word} />
-        <Alphabets />
+        <GuessedWordsDisplay
+          quiz={this.state.word}
+          guessedWords={this.state.guessedWords}
+        />
+        <Alphabets
+          guessedWords={(word, index) => this.guessedWordsHandler(word, index)}
+          quiz={this.state.word}
+        />
       </div>
     );
   }
