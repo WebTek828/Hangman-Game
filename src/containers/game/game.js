@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./game.css";
 import Alphabets from "../../components/Alphabets/Alphabets";
 import GuessedWordsDisplay from "../../components/GuessedWordsDisplay/GuessedWordsDisplay";
+import randomWords from "random-words";
 import Win from "../../components/Win/Win";
 import img0 from "../../images/0.jpg";
 import img1 from "../../images/1.jpg";
@@ -13,7 +14,9 @@ import img5 from "../../images/5.jpg";
 import img6 from "../../images/6.jpg";
 
 class Game extends Component {
-  words = "swear heart love compassion guy lady".split(" ");
+  randomWord = () => {
+    return randomWords();
+  };
   imgs = [img0, img1, img2, img3, img4, img5, img6];
   state = {
     word: "",
@@ -22,11 +25,11 @@ class Game extends Component {
     curState: 0,
     lose: false,
   };
+  useRandomWord = this.randomWord();
 
   componentDidMount() {
-    const rn = Math.floor(Math.random() * this.words.length);
-    const guessedWords = [...Array(this.words[rn].length)];
-    this.setState({ word: this.words[rn], guessedWords });
+    const guessedWords = [...Array(this.useRandomWord.length)];
+    this.setState({ word: this.useRandomWord, guessedWords });
   }
 
   guessedWordsHandler = (word, index) => {
@@ -58,11 +61,10 @@ class Game extends Component {
     btns.forEach((btn) => {
       btn.disabled = false;
     });
-
-    const rn = Math.floor(Math.random() * this.words.length);
-    const guessedWords = [...Array(this.words[rn].length)];
+    const randomWord = this.randomWord();
+    const guessedWords = [...Array(randomWord.length)];
     this.setState({
-      word: this.words[rn],
+      word: randomWord,
       guessedWords,
       win: false,
       lose: false,
@@ -79,7 +81,7 @@ class Game extends Component {
           playAgain={this.playAgainHandler}
         />
         <Win
-          textMsg="You lose the game."
+          textMsg={`You lose the game.The word is "${this.state.word}"`}
           win={this.state.lose}
           playAgain={this.playAgainHandler}
         />
